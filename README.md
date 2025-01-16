@@ -1,4 +1,4 @@
-# Projet 48h : Développement d’une interface de visualisation pour un BMS
+# Projet 48h : Identifier une technologie pour une interface BMS
 
 ## Objectif du projet
 L’objectif de ce projet est de développer une interface graphique nouvelle permettant de visualiser les informations envoyées via le bus CAN par un système de gestion de batterie (BMS). Ce projet devra être réalisé en 48 heures.
@@ -21,7 +21,8 @@ L’interface devra :
 Vous êtes libres de choisir la technologie ou le framework pour l’interface graphique (PyQt, Tkinter, JavaFX, etc.), à condition qu’elle soit :
     - Compatible avec le matériel PeakCAN.
     - Exécutable sous Windows.
-
+- Affichage
+    - Adapter en fonction de la résolution et de la taille d'écran
 - Aspect Sécurité
     - Le produit final devra être compilé.
     - Le client ne doit pas avoir accès au code source (livraison d’un .exe ou autre format compilé).
