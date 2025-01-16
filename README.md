@@ -1,15 +1,48 @@
-# Projet_48h_YNOV
+# Projet 48h : Développement d’une interface de visualisation pour un BMS
 
+## Objectif du projet
+L’objectif de ce projet est de développer une interface graphique nouvelle permettant de visualiser les informations envoyées via le bus CAN par un système de gestion de batterie (BMS). Ce projet devra être réalisé en 48 heures.
+
+L’interface devra :
+- Afficher les données essentielles :
+    - Les tensions (cellules individuelles, batterie totale, minimum, maximum).
+    - Les températures des sondes NTC.
+    - Les états d’alarme.
+    - Le numéro de série (SN) du BMS.
+- Être compatible avec le matériel PeakCAN pour la communication CAN.
+- Garantir un aspect de sécurité logicielle :
+    - Le résultat final doit être un exécutable ou un programme compilé.
+    - Les scripts sources ne doivent pas être directement consultables par le client.
 
 ---
+## Contraintes Techniques
 
-# Gestion des Trames CAN pour le BMS
+- Technologie  
+Vous êtes libres de choisir la technologie ou le framework pour l’interface graphique (PyQt, Tkinter, JavaFX, etc.), à condition qu’elle soit :
+    - Compatible avec le matériel PeakCAN.
+    - Exécutable sous Windows.
+
+- Aspect Sécurité
+    - Le produit final devra être compilé.
+    - Le client ne doit pas avoir accès au code source (livraison d’un .exe ou autre format compilé).
+
+- Visualisation des données
+    - L’interface doit être claire et intuitive.
+    - Les données doivent être mises à jour en temps réel ou quasi temps réel (selon les messages CAN reçus).
+
+- Documentation  
+Fournir une documentation basique expliquant :
+    - Comment utiliser l’interface.
+    - Les fonctionnalités principales.
+    
+---
+## Gestion des Trames CAN pour le BMS
 
 Ce projet implémente un système de gestion des trames CAN pour un système de gestion de batterie (BMS). Les différentes trames gèrent des données comme les tensions, les températures, les états des alarmes, et d'autres informations essentielles au fonctionnement du BMS.
 
 ---
 
-## Table des Matières
+### Table des Matières
 
 - [Trames CAN](#trames-can)
   - [Trame 0x200 - Tensions (V1 à V4)](#trame-0x200---tensions-v1-à-v4)
@@ -22,9 +55,9 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-série-sn)
 ---
 
-## Trames CAN
+### Trames CAN
 
-### Trame 0x200 - Tensions (V1 à V4)
+#### Trame 0x200 - Tensions (V1 à V4)
 
 - **Description** : Contient les tensions des cellules 1 à 4, chacune encodée sur 2 octets.
 - **Structure** :  
@@ -39,7 +72,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   [0x0F, 0xA0, 0x0F, 0x80, 0x0F, 0x60, 0x0F, 0x40]
   ```
 
-### Trame 0x201 - Tensions (V5 à V8)
+#### Trame 0x201 - Tensions (V5 à V8)
 
 - **Description** : Contient les tensions des cellules 5 à 8, chacune encodée sur 2 octets.
 - **Structure** :  
@@ -50,7 +83,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 6-7 : V5
   ```
 
-### Trame 0x202 - Tensions (V9 à V12)
+#### Trame 0x202 - Tensions (V9 à V12)
 
 - **Description** : Contient les tensions des cellules 9 à 12, chacune encodée sur 2 octets.
 - **Structure** :  
@@ -61,7 +94,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 6-7 : V9
   ```
 
-### Trame 0x203 - Tension V13
+#### Trame 0x203 - Tension V13
 
 - **Description** : Contient la tension de la cellule 13.
 - **Structure** :  
@@ -71,7 +104,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 5   : Réservé
   ```
 
-### Trame 0x204 - Températures (NTC)
+#### Trame 0x204 - Températures (NTC)
 
 - **Description** : Contient les températures mesurées par les sondes NTC.
 - **Structure** :  
@@ -86,7 +119,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 7 : T8
   ```
 
-### Trame 0x205 - Statistiques Batterie
+#### Trame 0x205 - Statistiques Batterie
 
 - **Description** : Contient les statistiques globales des cellules de la batterie.
 - **Structure** :  
@@ -102,7 +135,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - `Vmax` : Tension maximale parmi les cellules.
   - `Vbatt` : Valeur mesurée de la batterie.
 
-### Trame 0x206 - Alarmes
+#### Trame 0x206 - Alarmes
 
 - **Description** : Indique l'état des alarmes sur 6 octets.
 - **Structure** :  
@@ -113,7 +146,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 3-5 : Réservé
   ```
 
-### Trame 0x300 - Numéro de Série (SN)
+#### Trame 0x300 - Numéro de Série (SN)
 
 - **Description** : Contient le numéro de série du BMS.
 - **Structure** :  
@@ -126,7 +159,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 
 ---
 
-## Contributions
+### Contributions
 
 Les contributions sont les bienvenues ! Veuillez suivre ces étapes :
 1. Forkez le dépôt.
