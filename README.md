@@ -53,8 +53,8 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - [Trame 0x204 - Températures (NTC)](#trame-0x204---températures-ntc)
   - [Trame 0x205 - Statistiques Batterie](#trame-0x205---statistiques-batterie)
   - [Trame 0x206 - Alarmes](#trame-0x206---alarmes)
-  - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-serie-(sn))
-  - [Trame 0x301 - Version HW / SW](#trame-0x301---alarmes)
+  - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-série-sn)
+  - [Trame 0x301 - Version HW / SW](#trame-0x301---version-hw--sw)
 ---
 
 ### Trames CAN
