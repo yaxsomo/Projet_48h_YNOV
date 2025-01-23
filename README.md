@@ -53,7 +53,8 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - [Trame 0x204 - Températures (NTC)](#trame-0x204---températures-ntc)
   - [Trame 0x205 - Statistiques Batterie](#trame-0x205---statistiques-batterie)
   - [Trame 0x206 - Alarmes](#trame-0x206---alarmes)
-  - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-série-sn)
+  - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-serie-(sn))
+  - [Trame 0x301 - Version HW / SW](#trame-0x206---alarmes)
 ---
 
 ### Trames CAN
@@ -110,14 +111,10 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 - **Description** : Contient les températures mesurées par les sondes NTC.
 - **Structure** :  
   ```
-  Octet 0 : T1
-  Octet 1 : T2
-  Octet 2 : T3
-  Octet 3 : T4
-  Octet 4 : T5
-  Octet 5 : T6
-  Octet 6 : T7
-  Octet 7 : T8
+  Octet 0-1 : Réservé ou données supplémentaires (0x00)
+  Octet 2-3 : NTC3 (température 3)
+  Octet 4-5 : NTC2 (température 2)
+  Octet 6-7 : NTC1 (température 1)
   ```
 
 #### Trame 0x205 - Statistiques Batterie
@@ -141,9 +138,9 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 - **Description** : Indique l'état des alarmes sur 6 octets.
 - **Structure** :  
   ```
-  Octet 0 : Vmin (bit 7), Vmax (bit 6)
-  Octet 1 : Tmin (bit 7), Tmax (bit 6)
-  Octet 2 : Vbatt (bit 7), SN (bit 6)
+  Octet 0 : Vmin (bit 0), Vmax (bit 1)
+  Octet 1 : Tmin (bit 0), Tmax (bit 1)
+  Octet 2 : Vbatt (bit 0), SN (bit 1)
   Octet 3-5 : Réservé
   ```
 
@@ -152,10 +149,17 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 - **Description** : Contient le numéro de série du BMS.
 - **Structure** :  
   ```
-  Octet 0 : Version
-  Octet 1 : Identifiant
-  Octet 2-3 : Code produit
-  Octet 4-7 : Numéro de série
+  Octet 0-7 : PN, SN ou code produit (ex: [0x6E, 0xCF, 0xF1, 0x00, 0x19, 0x01, 0x04, 0xDD])
+
+  ```
+#### Trame 0x301 - Version HW / SW
+
+- **Description** : Cette trame indique la version matérielle (Hardware) et logicielle (Software) du BMS..
+- **Structure** :  
+  ```
+  Octet 0-2 : Réservés (0x00)
+  Octet 3-4 : Version Hardware (ex. 2.0)
+  Octet 5-7 : Version Software (ex. 1.22.4)
   ```
 
 ---
@@ -164,7 +168,55 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 
 Les contributions sont les bienvenues ! Veuillez suivre ces étapes :
 1. Forkez le dépôt.
-2. Créez une branche de fonctionnalité (`feature/ajout-nouvelle-trame`).
-3. Faites vos modifications et créez une pull request.
+2. Faites vos modifications et créez une pull request.
+
+---
+
+### Système de Notation : Projet 48h - Interface CAN BMS
+
+#### 1. Présentation (5 points)
+**Critères évalués :**
+
+- **Qualité de la communication orale (professionnel) (2 points)**  
+Clarté de l’expression, cohérence dans l’explication des choix techniques, respect des règles de présentation professionnelle.
+
+- **Qualité du support de présentation (professionnel) (2 points)**  
+Esthétique, lisibilité, et organisation du support (slides, PDF, etc.).  
+Inclusion de schémas, de graphes et de visualisations des flux CAN.
+
+- **Utilisation du temps de parole (1 point)**  
+Respect du temps alloué (10 minutes maximum).
+
+#### 2. Proposition (12 points)
+**Critères évalués :**
+
+- **Stack technologique (3 points)**  
+Pertinence du choix des outils pour le projet (frameworks graphiques, gestion CAN, etc.).
+
+- **Gestion des données (3 points)**  
+Organisation et structuration des données reçues via CAN.  
+Correcte interprétation et affichage des trames.
+
+- **Architecture et infrastructure (3 points)**  
+Clarté et robustesse du code.  
+Gestion des exceptions et sécurité.
+
+- **Sécurité (3 points)**  
+Interface compilée sans accès direct au code source.  
+Protection contre d’éventuelles données CAN mal formées.
+
+#### 3. Maquette et Fonctionnalité (10 points)
+**Critères évalués :**
+
+- **Cohérence avec la présentation (3 points)**  
+Alignement entre ce qui a été présenté et la solution développée.  
+Visibilité des différentes fonctionnalités mentionnées.
+
+- **Interface graphique (5 points)**  
+Intuitivité et esthétique.  
+Affichage des tensions, températures, alarmes et numéro de série.
+
+- **Compatibilité avec PeakCAN (2 points)**  
+Démonstration fonctionnelle et correcte sur le matériel.
 
 ---
