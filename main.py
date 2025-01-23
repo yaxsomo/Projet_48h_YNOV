@@ -52,6 +52,7 @@ class BMSApp(tk.Tk):
         # On close, stop the CAN thread
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
+
     def _build_main_tab(self, parent):
         """
         MAIN TAB:
