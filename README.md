@@ -55,6 +55,9 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - [Trame 0x206 - Alarmes](#trame-0x206---alarmes)
   - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-série-sn)
   - [Trame 0x301 - Version HW / SW](#trame-0x301---version-hw--sw)
+- [Contributions](#contributions)
+- [Système de Notation : Projet 48h - Interface CAN BMS](#système-de-notation--projet-48h---interface-can-bms)
+- [Logiciel Conseillé](#logiciel-conseillé)
 ---
 
 ### Trames CAN
