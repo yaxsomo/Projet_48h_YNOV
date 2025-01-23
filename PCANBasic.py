@@ -404,7 +404,7 @@ class PCANBasic:
         if system_name == "Windows":
             # Typically 2 libraries: x86 or x64
             if arch_bits == "64bit":
-                dll_path = os.path.join(base_dir, "pcan_libs", "x64", "PCANBasic.dll")
+                dll_path = os.path.join(base_dir, "pcan_libs", "PCANBasic.dll")
             else:
                 dll_path = os.path.join(base_dir, "pcan_libs", "x86", "PCANBasic.dll")
 

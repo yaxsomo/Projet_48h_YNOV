@@ -18,12 +18,12 @@ class BMSPcanListener:
     def __init__(
         self,
         channel=PCAN_USBBUS1,
-        baudrate=PCAN_BAUD_250K,
+        baudrate=PCAN_BAUD_500K,
         on_update=None
     ):
         """
         :param channel: which PCAN USB channel to open, e.g. PCAN_USBBUS1
-        :param baudrate: e.g. PCAN_BAUD_250K
+        :param baudrate: e.g. PCAN_BAUD_500K
         :param on_update: callback function bms_data -> None 
                           (called whenever a new BMS frame is parsed)
         """

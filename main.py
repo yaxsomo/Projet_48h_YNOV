@@ -1,13 +1,24 @@
 import tkinter as tk
+
+import locale
+
+from data_handler import BMSPcanListener
+from PCANBasic import PCAN_USBBUS1, PCAN_BAUD_500K
+
+try:
+    locale.setlocale(locale.LC_ALL, locale.setlocale(locale.LC_TIME,"tr_TR.utf8"))
+except locale.Error:
+    locale.setlocale(locale.LC_ALL, locale.setlocale(locale.LC_TIME,"C"))
+
 from ttkbootstrap import Style
 from ttkbootstrap.widgets import Meter
 
-from data_handler import BMSPcanListener
-from PCANBasic import PCAN_USBBUS1, PCAN_BAUD_250K
 
 class BMSApp(tk.Tk):
     def __init__(self):
         super().__init__()
+
+
 
         # Choose a ttkbootstrap theme
         self.style = Style("superhero")  # e.g. "superhero", "cyborg", "darkly", etc.
@@ -264,7 +275,7 @@ class BMSApp(tk.Tk):
         # Start CAN listener
         self.can_listener = BMSPcanListener(
             channel=PCAN_USBBUS1,
-            baudrate=PCAN_BAUD_250K,
+            baudrate=PCAN_BAUD_500K,
             on_update=self.on_bms_data
         )
         self.can_listener.start()
