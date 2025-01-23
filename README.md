@@ -220,3 +220,12 @@ Affichage des tensions, températures, alarmes et numéro de série.
 Démonstration fonctionnelle et correcte sur le matériel.
 
 ---
+### Logiciel Conseillé
+
+Pour envoyer et recevoir des trames CAN, il est recommandé d'utiliser **PCAN-View**, l’outil fourni par Peak-System.  
+- **PCAN-View** permet de :
+- Configurer facilement l’interface PeakCAN (PCAN-USB, PCAN-PCI, etc.).
+- Envoyer et réceptionner des trames CAN en temps réel.
+- Surveiller l’activité sur le bus CAN et déboguer les données échangées.
+
+Vous pouvez également utiliser ce logiciel pour simuler ou tester l’envoi de trames à l’application BMS que vous développez.
