@@ -3,6 +3,7 @@
 ## Objectif du projet
 L’objectif de ce projet est de développer une interface graphique nouvelle permettant de visualiser les informations envoyées via le bus CAN par un système de gestion de batterie (BMS). Ce projet devra être réalisé en 48 heures.
 
+
 L’interface devra :
 - Afficher les données essentielles :
     - Les tensions (cellules individuelles, batterie totale, minimum, maximum).
