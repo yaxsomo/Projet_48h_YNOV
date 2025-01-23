@@ -104,9 +104,8 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 - **Description** : Contient la tension de la cellule 13.
 - **Structure** :  
   ```
-  Octet 0-2 : Réservé (0x00, 0x00, 0x00)
-  Octet 3-4 : V13
-  Octet 5   : Réservé
+  Octet 0-5 : Réservé
+  Octet 6-7 : V13
   ```
 
 #### Trame 0x204 - Températures (NTC)
