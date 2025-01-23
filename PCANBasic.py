@@ -23,6 +23,7 @@
 from ctypes import *
 from string import *
 import platform
+import os
 
 if platform.system() == "Darwin":
     # To solve an issue with file system relative paths that are not allowed
@@ -388,27 +389,56 @@ class PCANBasic:
       PCAN-Basic API class implementation
     """      
     def __init__(self):
-        # Loads the PCANBasic API
-        #     
-        if platform.system() == 'Windows':
-            # Loads the API on Windows
-            self.__m_dllBasic = windll.LoadLibrary("PCANBasic")
-        elif platform.system() == 'Linux':
-            # Loads the API on Linux
-            self.__m_dllBasic = cdll.LoadLibrary("libpcanbasic.so")            
-        elif platform.system() == 'Darwin':
-            # Loads the API on Mac
-            #
-            # NOTE: 
-            # ~~~~~
-            # The macOS library for PCAN-USB interfaces from PEAK-System, PCBUSB library,
-            # is a third-party software creaded and mantained by the MacCAN project. For
-            # information and support, please contact MacCAN (info@mac-can).
-            #
-           self.__m_dllBasic = cdll.LoadLibrary(find_library("libPCBUSB.dylib"))
+        """
+        Attempt to load the correct PCANBasic library for Windows, Linux, or macOS.
+        You must place the PCANBasic libs in your project directory in a known location,
+        e.g. ./pcan_libs/ for Windows & Linux, or rely on standard library paths on macOS.
+        """
+        base_dir = os.path.dirname(os.path.abspath(__file__))
 
-        if self.__m_dllBasic == None:
-            print ("Exception: The PCAN-Basic DLL couldn't be loaded!")
+        system_name = platform.system()  # "Windows", "Linux", or "Darwin"
+        arch_bits = platform.architecture()[0]  # "32bit" or "64bit"
+
+        self.__m_dllBasic = None
+
+        if system_name == "Windows":
+            # Typically 2 libraries: x86 or x64
+            if arch_bits == "64bit":
+                dll_path = os.path.join(base_dir, "pcan_libs", "x64", "PCANBasic.dll")
+            else:
+                dll_path = os.path.join(base_dir, "pcan_libs", "x86", "PCANBasic.dll")
+
+            if not os.path.exists(dll_path):
+                raise OSError(f"Cannot find PCANBasic.dll at {dll_path}")
+
+            self.__m_dllBasic = windll.LoadLibrary(dll_path)
+
+        elif system_name == "Linux":
+            # Usually "libpcanbasic.so" for 32 or 64 bit. Possibly you have only one .so
+            # or separate x86 / x64 copies. Adjust as needed
+            if arch_bits == "64bit":
+                so_path = os.path.join(base_dir, "pcan_libs", "x64", "libpcanbasic.so")
+            else:
+                so_path = os.path.join(base_dir, "pcan_libs", "x86", "libpcanbasic.so")
+
+            if not os.path.exists(so_path):
+                raise OSError(f"Cannot find libpcanbasic.so at {so_path}")
+
+            self.__m_dllBasic = cdll.LoadLibrary(so_path)
+
+        elif system_name == "Darwin":
+            # macOS with MacCAN's PCBUSB approach
+            # If you have "libPCBUSB.dylib" placed in the same folder or a known location:
+            dylib_path = os.path.join(base_dir, "pcan_libs", "libPCBUSB.dylib")
+            if os.path.exists(dylib_path):
+                self.__m_dllBasic = cdll.LoadLibrary(dylib_path)
+            else:
+                # fallback: rely on system search paths (like /usr/local/lib) if installed
+                self.__m_dllBasic = cdll.LoadLibrary(find_library("libPCBUSB.dylib"))
+
+        if self.__m_dllBasic is None:
+            raise OSError("Could not load the PCAN-Basic library for this OS/architecture!")
+
 
     # Initializes a PCAN Channel
     #
