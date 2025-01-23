@@ -15,7 +15,7 @@ L’interface devra :
     - Les scripts sources ne doivent pas être directement consultables par le client.
 
 ---
-## Contraintes Techniques
+## Contraintes techniques
 
 - Technologie  
 Vous êtes libres de choisir la technologie ou le framework pour l’interface graphique (PyQt, Tkinter, JavaFX, etc.), à condition qu’elle soit :
@@ -23,7 +23,7 @@ Vous êtes libres de choisir la technologie ou le framework pour l’interface g
     - Exécutable sous Windows.
 - Affichage
     - Adapter en fonction de la résolution et de la taille d'écran
-- Aspect Sécurité
+- Aspect sécurité
     - Le produit final devra être compilé.
     - Le client ne doit pas avoir accès au code source (livraison d’un .exe ou autre format compilé).
 
@@ -37,13 +37,13 @@ Fournir une documentation basique expliquant :
     - Les fonctionnalités principales.
     
 ---
-## Gestion des Trames CAN pour le BMS
+## Gestion des trames CAN pour le BMS
 
 Ce projet implémente un système de gestion des trames CAN pour un système de gestion de batterie (BMS). Les différentes trames gèrent des données comme les tensions, les températures, les états des alarmes, et d'autres informations essentielles au fonctionnement du BMS.
 
 ---
 
-### Table des Matières
+### Table des matières
 
 - [Trames CAN](#trames-can)
   - [Trame 0x200 - Tensions (V1 à V4)](#trame-0x200---tensions-v1-à-v4)
@@ -54,7 +54,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - [Trame 0x205 - Statistiques Batterie](#trame-0x205---statistiques-batterie)
   - [Trame 0x206 - Alarmes](#trame-0x206---alarmes)
   - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-serie-(sn))
-  - [Trame 0x301 - Version HW / SW](#trame-0x206---alarmes)
+  - [Trame 0x301 - Version HW / SW](#trame-0x301---alarmes)
 ---
 
 ### Trames CAN
@@ -117,7 +117,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 6-7 : NTC1 (température 1)
   ```
 
-#### Trame 0x205 - Statistiques Batterie
+#### Trame 0x205 - Statistiques batterie
 
 - **Description** : Contient les statistiques globales des cellules de la batterie.
 - **Structure** :  
@@ -144,7 +144,7 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   Octet 3-5 : Réservé
   ```
 
-#### Trame 0x300 - Numéro de Série (SN)
+#### Trame 0x300 - Numéro de série (SN)
 
 - **Description** : Contient le numéro de série du BMS.
 - **Structure** :  
