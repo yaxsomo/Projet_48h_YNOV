@@ -54,8 +54,11 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
   - [Trame 0x204 - Températures (NTC)](#trame-0x204---températures-ntc)
   - [Trame 0x205 - Statistiques Batterie](#trame-0x205---statistiques-batterie)
   - [Trame 0x206 - Alarmes](#trame-0x206---alarmes)
-  - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-serie-(sn))
-  - [Trame 0x301 - Version HW / SW](#trame-0x301---alarmes)
+  - [Trame 0x300 - Numéro de Série (SN)](#trame-0x300---numéro-de-série-sn)
+  - [Trame 0x301 - Version HW / SW](#trame-0x301---version-hw--sw)
+- [Contributions](#contributions)
+- [Système de Notation : Projet 48h - Interface CAN BMS](#système-de-notation--projet-48h---interface-can-bms)
+- [Logiciel Conseillé](#logiciel-conseillé)
 ---
 
 ### Trames CAN
@@ -102,9 +105,8 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 - **Description** : Contient la tension de la cellule 13.
 - **Structure** :  
   ```
-  Octet 0-2 : Réservé (0x00, 0x00, 0x00)
-  Octet 3-4 : V13
-  Octet 5   : Réservé
+  Octet 0-5 : Réservé
+  Octet 6-7 : V13
   ```
 
 #### Trame 0x204 - Températures (NTC)
@@ -150,14 +152,15 @@ Ce projet implémente un système de gestion des trames CAN pour un système de 
 - **Description** : Contient le numéro de série du BMS.
 - **Structure** :  
   ```
+  Trame 0x300 : le PN 110-51185 + NN + le SN 25-01-1245
   Octet 0-7 : PN, SN ou code produit (ex: [0x6E, 0xCF, 0xF1, 0x00, 0x19, 0x01, 0x04, 0xDD])
-
   ```
 #### Trame 0x301 - Version HW / SW
 
 - **Description** : Cette trame indique la version matérielle (Hardware) et logicielle (Software) du BMS..
 - **Structure** :  
   ```
+  Trame 0x301 : HW : 2.0 + le SW : 1.22.4 
   Octet 0-2 : Réservés (0x00)
   Octet 3-4 : Version Hardware (ex. 2.0)
   Octet 5-7 : Version Software (ex. 1.22.4)
@@ -224,7 +227,7 @@ Démonstration fonctionnelle et correcte sur le matériel.
 ### Logiciel Conseillé
 
 Pour envoyer et recevoir des trames CAN, il est recommandé d'utiliser **PCAN-View**, l’outil fourni par Peak-System.  
-- **PCAN-View** permet de :
+**PCAN-View** permet de :
 - Configurer facilement l’interface PeakCAN (PCAN-USB, PCAN-PCI, etc.).
 - Envoyer et réceptionner des trames CAN en temps réel.
 - Surveiller l’activité sur le bus CAN et déboguer les données échangées.
