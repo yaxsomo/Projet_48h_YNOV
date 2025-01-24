@@ -39,3 +39,5 @@ python3 main.py
 ```
 
 (Assurez vous d'avoir connecté le PCAN avant l'execution)
+
+(Le lien du figma)[https://www.figma.com/design/r52yxKLrBtR265g9Q2KfCE/Untitled?node-id=0-1&t=Rhlnh7ZAsAJQ3qDw-1]
