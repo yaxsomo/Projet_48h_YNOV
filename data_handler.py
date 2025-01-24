@@ -99,27 +99,19 @@ class BMSPcanListener:
             print("PCAN channel uninitialized cleanly.")
 
     def _run(self):
-        """
-        Background loop: read from PCAN in a blocking way.
-        Whenever a valid frame arrives, parse it. 
-        If we successfully parse 0x200..0x301, call on_update(bms_data).
-        """
+        last_update = time.time()
         while not self._stop.is_set():
-            # Attempt to read a CAN frame
             result, can_msg, timestamp = self.pcan.Read(self.channel)
             if result == PCAN_ERROR_OK:
-                # We got a message -> parse it
                 self._handle_message(can_msg)
-            elif result == PCAN_ERROR_QRCVEMPTY:
-                # No frame -> block briefly
-                if self.fd and self.fd != -1:
-                    select.select([self.fd], [], [], 0.1)
-                else:
-                    time.sleep(0.1)
-            else:
-                # Possibly a bus error or something else
-                # You can debug print it if needed
-                pass
+            elif result == PCAN_ERROR_QRCVEMPTY and self.fd and self.fd != -1:
+                select.select([self.fd], [], [], 0.01)  # Reduce timeout
+            # Batch GUI updates every 100ms
+            if time.time() - last_update > 0.01:
+                if self.on_update:
+                    self.on_update(self.bms_data)
+                last_update = time.time()
+
 
     def _handle_message(self, msg):
         """
@@ -212,9 +204,9 @@ class BMSPcanListener:
         ntc3_raw = (data[2] << 8) | data[3]
         ntc2_raw = (data[4] << 8) | data[5]
         ntc1_raw = (data[6] << 8) | data[7]
-        self.bms_data["ntc"][2] = ntc3_raw * 0.1
-        self.bms_data["ntc"][1] = ntc2_raw * 0.1
-        self.bms_data["ntc"][0] = ntc1_raw * 0.1
+        self.bms_data["ntc"][2] = ntc3_raw * 0.001
+        self.bms_data["ntc"][1] = ntc2_raw * 0.001
+        self.bms_data["ntc"][0] = ntc1_raw * 0.001
 
     def _parse_0x205(self, data):
         # [0..1] => vpack, [2..3] => vmin, [4..5] => vmax, [6..7] => vbatt
@@ -273,12 +265,12 @@ if __name__ == "__main__":
     # Quick test usage:
     def print_data(bms_data):
         print("Received BMS data:", bms_data)
-
+    
     listener = BMSPcanListener(on_update=print_data)
     listener.start()
     try:
-        while True:
-            time.sleep(1)
+        while(True):
+            time.sleep(0.5)
     except KeyboardInterrupt:
         listener.stop()
         sys.exit(0)
