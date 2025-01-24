@@ -23,8 +23,8 @@ class BMSApp(tk.Tk):
         # Choose a ttkbootstrap theme
         self.style = Style("superhero")  # e.g. "superhero", "cyborg", "darkly", etc.
 
-        self.title("BMS Interface - Single Window (ttkbootstrap + circular meters)")
-        self.geometry("1200x800")
+        self.title("BMS 13-14S (13S) 150-X Supervisor")
+        self.geometry("1920x1080")
 
         # Keep references for dynamic resizing
         self.resizable_widgets = []
@@ -34,16 +34,7 @@ class BMSApp(tk.Tk):
         self.grid_rowconfigure(1, weight=1)  # Main content row
         self.grid_columnconfigure(0, weight=1)
 
-        # Title
-        self.title_label = tk.Label(
-            self,
-            text="BMS 13-14S (13S) 150-X Supervisor",
-            font=("TkDefaultFont", 18, "bold"),
-            bg=self.style.colors.get('bg'),
-            fg=self.style.colors.get('primary')
-        )
-        self.title_label.grid(row=0, column=0, pady=10)
-        self.resizable_widgets.append(self.title_label)
+
 
         # Main content frame
         main_frame = tk.Frame(self, bg=self.style.colors.get('bg'))
@@ -69,7 +60,7 @@ class BMSApp(tk.Tk):
         cell_volt_frame.pack(side="top", fill="both", expand=False)
         cell_volt_frame.grid_columnconfigure((0,1,2,3), weight=1)
 
-        max_cell_volt = 5.0  # e.g. assume 5.0 V max per cell
+        max_cell_volt = 10.0  # e.g. assume 5.0 V max per cell
         for i in range(13):
             row = i // 4
             col = i % 4
@@ -80,12 +71,12 @@ class BMSApp(tk.Tk):
 
             m = Meter(
                 m_container,
-                metersize=100,
+                metersize=120,
                 amountused=0,
                 amounttotal=max_cell_volt,
                 # Show only the numeric reading in the circle
-                # 'textright' or 'textleft' can hold your numeric value
-                textright="-- V",
+                # 'textright' or 'textright' can hold your numeric value
+                textright=" V",
                 textfont="-size 10 -weight bold",
                 # No subtext => we won't place "Cell X" inside the meter
                 subtext=None,
@@ -173,9 +164,9 @@ class BMSApp(tk.Tk):
         self.meter_vpack = self._create_meter_with_label(
             parent=bat_stats_frame,
             meter_label="Vpack",
-            meter_size=120,
-            amounttotal=60,
-            textleft="-- V",   # numeric reading inside
+            meter_size=150,
+            amounttotal=900,
+            textright=" V",   # numeric reading inside
             style="warning"
         )
         self.meter_vpack.grid(row=0, column=0, padx=5, pady=5)
@@ -183,9 +174,9 @@ class BMSApp(tk.Tk):
         self.meter_vmin = self._create_meter_with_label(
             parent=bat_stats_frame,
             meter_label="Vmin",
-            meter_size=120,
-            amounttotal=5,
-            textleft="-- V",
+            meter_size=150,
+            amounttotal=900,
+            textright=" V",
             style="info"
         )
         self.meter_vmin.grid(row=0, column=1, padx=5, pady=5)
@@ -193,9 +184,9 @@ class BMSApp(tk.Tk):
         self.meter_vmax = self._create_meter_with_label(
             parent=bat_stats_frame,
             meter_label="Vmax",
-            meter_size=120,
-            amounttotal=5,
-            textleft="-- V",
+            meter_size=150,
+            amounttotal=900,
+            textright=" V",
             style="info"
         )
         self.meter_vmax.grid(row=1, column=0, padx=5, pady=5)
@@ -203,9 +194,9 @@ class BMSApp(tk.Tk):
         self.meter_vbatt = self._create_meter_with_label(
             parent=bat_stats_frame,
             meter_label="Vbatt",
-            meter_size=120,
-            amounttotal=60,
-            textleft="-- V",
+            meter_size=150,
+            amounttotal=900,
+            textright=" V",
             style="warning"
         )
         self.meter_vbatt.grid(row=1, column=1, padx=5, pady=5)
@@ -221,9 +212,9 @@ class BMSApp(tk.Tk):
         self.meter_ntc1 = self._create_meter_with_label(
             parent=ntc_frame,
             meter_label="NTC1",
-            meter_size=90,
-            amounttotal=100,
-            textleft="--°C",
+            meter_size=150,
+            amounttotal=150,
+            textright=" °C",
             style="success"
         )
         self.meter_ntc1.grid(row=0, column=0, padx=5, pady=5)
@@ -231,9 +222,9 @@ class BMSApp(tk.Tk):
         self.meter_ntc2 = self._create_meter_with_label(
             parent=ntc_frame,
             meter_label="NTC2",
-            meter_size=90,
-            amounttotal=100,
-            textleft="--°C",
+            meter_size=150,
+            amounttotal=150,
+            textright=" °C",
             style="success"
         )
         self.meter_ntc2.grid(row=0, column=1, padx=5, pady=5)
@@ -241,9 +232,9 @@ class BMSApp(tk.Tk):
         self.meter_ntc3 = self._create_meter_with_label(
             parent=ntc_frame,
             meter_label="NTC3",
-            meter_size=90,
-            amounttotal=100,
-            textleft="--°C",
+            meter_size=150,
+            amounttotal=150,
+            textright=" °C",
             style="success"
         )
         self.meter_ntc3.grid(row=0, column=2, padx=5, pady=5)
@@ -288,7 +279,7 @@ class BMSApp(tk.Tk):
         self._resize_id = None
 
     def _create_meter_with_label(self, parent, meter_label, meter_size, amounttotal,
-                                 textleft, style="info"):
+                                 textright, style="info"):
         """
         Helper to create a container with a Meter (only numeric inside)
         + a separate Label below it to show the 'meter_label' outside the circle.
@@ -301,7 +292,7 @@ class BMSApp(tk.Tk):
             metersize=meter_size,
             amountused=0,
             amounttotal=amounttotal,
-            textleft=textleft,
+            textright=textright,
             textfont="-size 10 -weight bold",
             # No subtext => label is outside the meter
             subtext=None,
@@ -332,36 +323,28 @@ class BMSApp(tk.Tk):
         # Cell voltages: 13 meters
         for i, val in enumerate(data["voltages"]):
             if val is not None:
-                used = min(val, 5.0)
-                self.cell_meters[i].configure(amountused=used, textright=f"{val:.2f}V")
+                self.cell_meters[i].configure(amountused=val)
             else:
-                self.cell_meters[i].configure(amountused=0, textright="-- V")
+                self.cell_meters[i].configure(amountused=0)
 
         # Battery stats
         if data["pack_sum"] is not None:
-            used = min(data["pack_sum"], 60)
-            self.meter_vpack.winfo_children()[0].configure(amountused=used, textleft=f"{data['pack_sum']:.2f}V")
+            self.meter_vpack.winfo_children()[0].configure(amountused=data["pack_sum"])
         if data["vmin"] is not None:
-            used = min(data["vmin"], 5)
-            self.meter_vmin.winfo_children()[0].configure(amountused=used, textleft=f"{data['vmin']:.2f}V")
+            self.meter_vmin.winfo_children()[0].configure(amountused=data["vmin"])
         if data["vmax"] is not None:
-            used = min(data["vmax"], 5)
-            self.meter_vmax.winfo_children()[0].configure(amountused=used, textleft=f"{data['vmax']:.2f}V")
+            self.meter_vmax.winfo_children()[0].configure(amountused=data["vmax"])
         if data["vbatt"] is not None:
-            used = min(data["vbatt"], 60)
-            self.meter_vbatt.winfo_children()[0].configure(amountused=used, textleft=f"{data['vbatt']:.2f}V")
+            self.meter_vbatt.winfo_children()[0].configure(amountused=data["vbatt"])
 
         # NTC
         ntc1, ntc2, ntc3 = data["ntc"]
         if ntc1 is not None:
-            self.meter_ntc1.winfo_children()[0].configure(amountused=min(ntc1, 100),
-                                                          textleft=f"{ntc1:.1f}°C")
+            self.meter_ntc1.winfo_children()[0].configure(amountused=ntc1)
         if ntc2 is not None:
-            self.meter_ntc2.winfo_children()[0].configure(amountused=min(ntc2, 100),
-                                                          textleft=f"{ntc2:.1f}°C")
+            self.meter_ntc2.winfo_children()[0].configure(amountused=ntc2)
         if ntc3 is not None:
-            self.meter_ntc3.winfo_children()[0].configure(amountused=min(ntc3, 100),
-                                                          textleft=f"{ntc3:.1f}°C")
+            self.meter_ntc3.winfo_children()[0].configure(amountused=ntc3)
 
         # Alarms
         def update_alarm(label_widget, triggered):
@@ -396,7 +379,7 @@ class BMSApp(tk.Tk):
         """Debounce the resizing so we only scale fonts 200ms after the last event."""
         if hasattr(self, "_resize_id") and self._resize_id is not None:
             self.after_cancel(self._resize_id)
-        self._resize_id = self.after(200, self._resize_widgets)
+        self._resize_id = self.after(1000, self._resize_widgets)
 
     def _resize_widgets(self):
         """
@@ -406,7 +389,7 @@ class BMSApp(tk.Tk):
         w = self.winfo_width()
         h = self.winfo_height()
 
-        scale_factor = min(w / 1200, h / 800)
+        scale_factor = min(w / 1920, h / 1080)
         base_size = 14
         new_size = int(base_size * scale_factor)
         if new_size < 8:
@@ -428,7 +411,7 @@ class BMSApp(tk.Tk):
         for widget in self.resizable_widgets:
             if isinstance(widget, Meter):
                 try:
-                    # We only have a single text in the circle (textleft or textright).
+                    # We only have a single text in the circle (textright or textright).
                     # subtext is None, so we can skip subtextfont or set them the same.
                     widget.configure(
                         textfont=meter_font_str
